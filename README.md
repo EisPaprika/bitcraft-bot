@@ -15,6 +15,8 @@ Select you want to create your own bot if asked and start creating an "applicati
 4. (optional) You can add your own Emojis on the "Emojis" tab if needed
 ### Set up the script
 1. Install requirements
+   - create a virtual environment (https://docs.python.org/3/library/venv.html)
+   - or just install it globally (https://packaging.python.org/en/latest/tutorials/installing-packages/)
 2. Edit the bot.py
   - give your TOKEN to the script (line 5, simply paste it in the "")
   - get the channel id of the channel you want the bot to write in
@@ -28,3 +30,4 @@ Note: CHANNEL_ID and SLEEPTIME are ints (numbers). Token is a string.
   - select the server you want to add the bot to
   - allow the permissions that are requested
 2. Start the bot.py script
+python bot.py
