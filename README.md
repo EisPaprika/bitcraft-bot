@@ -23,6 +23,7 @@ Select you want to create your own bot if asked and start creating an "applicati
     - right click the channel and there should be a field "Copy Channel ID"
     - place it behind (line 6) CHANNEL_ID =
   - update time interval at line 8 SLEEPTIME =
+
 Note: CHANNEL_ID and SLEEPTIME are ints (numbers). Token is a string.
 ### Start the bot
 1. Invite the bot to your discord server (guild)
