@@ -32,3 +32,9 @@ Note: CHANNEL_ID and SLEEPTIME are ints (numbers). Token is a string.
   - allow the permissions that are requested
 2. Start the bot.py script
 python bot.py
+
+## TODO
+- use forums instead of channels
+- detect already posted crafts
+- create a leaderboard for finished crafts (see https://bitjita.com/docs/api/crafts/[craftId]/contributions)
+  - delete finished crafts from their respective channel
