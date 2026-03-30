@@ -109,9 +109,10 @@ async def poll_data():
             if response.status_code == 200:
                 data = response.json()
                 remove_old_ids(data)
+                await prune_old_crafts(channel=channel)
                 for craft in data["craftResults"]:
                     if craft["entityId"] not in seen_ids:
-                        if int(craft["totalActionsRequired"]) > 100000:
+                        if int(craft["totalActionsRequired"]) >= 50000:
                             try:
                                 building_name = craft["buildingName"]
                                 skill_name = skill[int(craft["levelRequirements"][0]["skill_id"])]
@@ -141,7 +142,6 @@ async def poll_data():
                                 craft_embed.set_footer(text=entity_id)
 
                                 await send_thread_message(embed=craft_embed, skill=skill_name, entity_id=entity_id, channel=channel)
-                                await prune_old_crafts(channel=channel)
 
                             except Exception as e:
                                 print("Error parsing:", e)
