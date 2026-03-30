@@ -17,6 +17,8 @@ skill = ["0 TELL ME", "ANY", "Forestry", "Carpentry", "Masonry", "Mining", "Smit
 tool = ["0 TELL ME", "Axe", "Saw", "Chisel", "Pickaxe", "Hammer", "Knife", "Bow", "Scissors", "Hoe", "Rod","Pot", "Machete", "Quill", "Shovel?"]
 tool_icons = ["None", ":axe:", ":carpentry_saw:", "Chisel", ":pick:", ":hammer:", ":knife:", ":archery:", ":scissors:", "Hoe", ":fishing_pole_and_fish:", ":cooking:", "Machete", ":feather:", "Shovel?"]
 
+ping_role = ["", "", "@Forestry", "@Carpentry", "@Masonry", "@Mining", "@Smithing", "@Scholar", "@Leatherworking", "@Hunting", "@Tailoring", "@Farming", "@Fishing", "@Cooking", "@Foraging", "@Construction", "", "", "", "", "", "@Sailing"]
+
 # ClaimID Myralune = 648518346354446795
 url = "https://bitjita.com/api/crafts?claimEntityId=648518346354446795"
 seen_ids = set()  # ids of crafts that have been seen/processed by the bot
@@ -115,6 +117,7 @@ async def poll_data():
                     if craft["entityId"] not in seen_ids:
                         if int(craft["totalActionsRequired"]) >= EFFORT_REQ:
                             try:
+                                discord_role = ping_role[int(craft["levelRequirements"][0]["skill_id"])]
                                 building_name = craft["buildingName"]
                                 skill_name = skill[int(craft["levelRequirements"][0]["skill_id"])]
                                 level_value = craft["levelRequirements"][0]["level"]
@@ -123,6 +126,7 @@ async def poll_data():
                                 if craft["toolRequirements"]:
                                     tool_icon = tool_icons[int(craft["toolRequirements"][0]["tool_type"])]
                                     craft_embed = embed.new_craft_embed(
+                                        Role=discord_role,
                                         Building=building_name,
                                         Skill=skill_name,
                                         Level=level_value,
@@ -132,6 +136,7 @@ async def poll_data():
                                     )
                                 else:
                                     craft_embed = embed.new_craft_embed(
+                                        Role=discord_role,
                                         Building=building_name,
                                         Skill=skill_name,
                                         Level=level_value,
