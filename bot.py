@@ -6,6 +6,7 @@ import src.utils.embeds.embed_builder as embed
 TOKEN = ""
 CHANNEL_ID =  
 SLEEPTIME = 
+EFFORT_REQ = 50000
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -112,7 +113,7 @@ async def poll_data():
                 await prune_old_crafts(channel=channel)
                 for craft in data["craftResults"]:
                     if craft["entityId"] not in seen_ids:
-                        if int(craft["totalActionsRequired"]) >= 50000:
+                        if int(craft["totalActionsRequired"]) >= EFFORT_REQ:
                             try:
                                 building_name = craft["buildingName"]
                                 skill_name = skill[int(craft["levelRequirements"][0]["skill_id"])]
