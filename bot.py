@@ -30,7 +30,7 @@ async def poll_data():
 
                 for craft in data["craftResults"]:
                     if craft["entityId"] not in seen_ids:
-                        if int(craft["totalActionsRequired"]) > 20000:
+                        if int(craft["totalActionsRequired"]) >= 100000:
                             try:
                                 building_name = craft["buildingName"]
                                 skill_name = skill[int(craft["levelRequirements"][0]["skill_id"])]
