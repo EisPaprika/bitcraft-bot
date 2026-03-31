@@ -121,6 +121,7 @@ async def poll_data():
     await bot.wait_until_ready()
     channel = bot.get_channel(CHANNEL_ID)
 
+    ping_allowed = False
     while not bot.is_closed():
         try:
             response = requests.get(url)
@@ -155,7 +156,8 @@ async def poll_data():
                                 message_content = ""
                                 is_large_craft=False
                                 if int(craft["totalActionsRequired"]) >= effort_thresholds_by_profession[skill_name]:
-                                    message_content = ping_role[int(craft["levelRequirements"][0]["skill_id"])]
+                                    if (ping_allowed):
+                                        message_content = ping_role[int(craft["levelRequirements"][0]["skill_id"])]
                                     is_large_craft = True
 
                                 craft_embed = embed.new_craft_embed(
@@ -180,6 +182,7 @@ async def poll_data():
         except Exception as e:
             print("Fatal Error:", e)
 
+        ping_allowed = True
         await asyncio.sleep(SLEEPTIME)
 
 '''
