@@ -2,8 +2,9 @@ import discord
 import requests
 import asyncio
 import src.utils.embeds.embed_builder as embed
+import logging
 
-TOKEN = 
+TOKEN = ""
 CHANNEL_ID = 
 
 SLEEPTIME = 30
@@ -165,22 +166,25 @@ async def poll_data():
                                     embed_description=embed_description,
                                     footer=entity_id
                                 )
-                                await send_thread_message(
-                                    content=message_content,
-                                    embed=craft_embed,
-                                    skill=skill_name,
-                                    entity_id=entity_id,
-                                    channel=channel
-                                )
+                                try:
+                                    await send_thread_message(
+                                        content=message_content,
+                                        embed=craft_embed,
+                                        skill=skill_name,
+                                        entity_id=entity_id,
+                                        channel=channel
+                                    )
+                                except Exception as e:
+                                    logging.error(f"Sending message failed: {e}")
 
                             except Exception as e:
-                                print("Error parsing:", e)
+                                logging.error(f"Error parsing: {e}")
 
             else:
-                print("Error:", response.status_code)
+                logging.error(f"Error: {response.status_code}")
 
         except Exception as e:
-            print("Fatal Error:", e)
+            logging.error(f"Fatal Error: {e}")
 
         ping_allowed = True
         await asyncio.sleep(SLEEPTIME)
@@ -193,7 +197,11 @@ Purpose  - Initialize the bot
 '''
 @bot.event
 async def on_ready():
-    print(f"Logged in as {bot.user}")
-    bot.loop.create_task(poll_data())
+    if not hasattr(bot, "polling_started"):
+        bot.polling_started = True
+        bot.loop.create_task(poll_data())
+        logging.info(f"Logged in as {bot.user}")
 
+logging.basicConfig(level=logging.INFO)
 bot.run(TOKEN)
+
